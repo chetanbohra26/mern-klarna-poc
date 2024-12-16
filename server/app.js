@@ -1,5 +1,7 @@
 const express = require('express');
 const cors = require('cors');
+const axios = require('axios');
+const morgan = require('morgan');
 
 require('dotenv').config();
 
@@ -24,6 +26,7 @@ const products = [
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(morgan());
 
 app.get('/products', (req, res) => {
   res.json({ success: true, data: products });

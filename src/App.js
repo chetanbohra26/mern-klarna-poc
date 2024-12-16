@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import Klarna from "./components/klarna";
 
 const BASE_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -10,7 +11,6 @@ function App() {
     const obj = {};
 
     if (products.length === 0) return obj;
-
     products?.forEach(i => {
       obj[i.id] = i;
     });
@@ -28,7 +28,7 @@ function App() {
       console.log('Error:', data);
       return;
     }
-    setProducts(data.data);
+    setProducts(data?.data);
   }
 
   const addQty = (id) => {
@@ -56,11 +56,6 @@ function App() {
       newCart[index] = { ...newCart[index], qty: newCart[index].qty - 1 };
       setCart(newCart);
     }
-  }
-
-  const handleCreateOrder = async (event) => {
-    event.preventDefault();
-    console.log('order created ====>');
   }
 
 
@@ -133,12 +128,7 @@ function App() {
               justifyContent: 'center'
             }}
           >
-            <button
-              style={{ alignSelf: 'center', padding: 10 }}
-              onClick={handleCreateOrder}
-            >
-              Checkout
-            </button>
+            <Klarna cart={cart} />
           </div>
           : null
       }
